@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="mvp.css" />
+    <title>Re:member Prototype</title>
+  </head>
+  <body>
+    <h1>Re:member Prototype</h1>
+    <div class="container">
+      <form action="/chunk" method="post">
+        <div class="form-group">
+          <label for="title">제목</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="제목을 입력하세요"
+          />
+          <label for="contents">내용</label>
+          <input
+            type="text"
+            id="contents"
+            name="contents"
+            placeholder="내용을 입력하세요"
+          />
+          <label for="category">카테고리</label>
+          <input
+            type="text"
+            id="category"
+            name="category"
+            placeholder="카테고리를 입력하세요"
+          />
+        </div>
+        <button type="submit">등록</button>
+      </form>
+    </div>
+    <!-- /container -->
+  </body>
+</html>
