@@ -24,7 +24,7 @@ public class PostService {
     }
 
     public List<Post> getByCategory(String category) {
-        return postRepository.findByCategory(category);
+        return postRepository.findByCategoryContaining(category);
     }
 
     public void save(Post post) {

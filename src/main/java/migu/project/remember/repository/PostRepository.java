@@ -10,5 +10,5 @@ public interface PostRepository extends CrudRepository<Post, String> {
     List<Post> findByTitleContaining(String title);
     Post findByPostId(String id);
     List<Post> findAll();
-    List<Post> findByCategory(String category);
+    List<Post> findByCategoryContaining(String category);
 }
