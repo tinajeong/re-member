@@ -179,4 +179,5 @@ gradle-app.setting
 
 bin/main/hibernate.cfg.xml
 
+commit
 # End of https://www.toptal.com/developers/gitignore/api/java,windows,intellij
