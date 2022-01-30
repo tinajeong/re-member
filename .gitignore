@@ -169,7 +169,7 @@ $RECYCLE.BIN/
 **/build/
 !src/**/build/
 bin/**
-
+bin/
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -178,6 +178,5 @@ gradle-app.setting
 !gradle-wrapper.jar
 
 bin/main/hibernate.cfg.xml
-
 commit
 # End of https://www.toptal.com/developers/gitignore/api/java,windows,intellij
