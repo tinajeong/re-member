@@ -16,5 +16,7 @@ spring:
         show_sql: 'true'
   thymeleaf:
     cache: 'false'
-
-
+  logging:
+    level:
+      root: INFO
+      org.springframework.web: INFO
