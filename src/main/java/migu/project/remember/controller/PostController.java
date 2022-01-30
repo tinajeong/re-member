@@ -5,8 +5,11 @@ import migu.project.remember.data.PostForm;
 import migu.project.remember.service.PostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -39,7 +42,13 @@ public class PostController {
     }
 
     @PostMapping("chunk")
-    public String postChunk(@RequestBody PostForm postForm) {
+    public String postChunk(@RequestBody @Valid PostForm postForm, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+
+            log.info("invalid postForm :"+postForm.toString());
+            return "redirect:/feed";
+        }
+
         String category = postForm.getCategory();
         category = category == null ? "" : category;
 
