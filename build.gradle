@@ -21,7 +21,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	implementation 'junit:junit'
-	implementation 'org.json:json'
+	implementation 'org.json:json:20220924'
 	runtimeOnly 'com.h2database:h2'
 }
 
