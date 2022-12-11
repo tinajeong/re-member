@@ -4,6 +4,16 @@ import Loading from "./Loading";
 import Error from "./Error";
 import { useLocation } from "react-router-dom";
 
+const fetchPosts = async (keyword) => {
+  var query = "http://localhost:8080/feed";
+  if (keyword && keyword.length >= 2) {
+    query += "/category?search=" + encodeURI(encodeURIComponent(keyword));
+  }
+  console.log(query);
+  const res = await fetch(query);
+  return res.json();
+};
+
 export default function Post() {
   const location = useLocation();
   var keyword ='';
@@ -11,25 +21,15 @@ export default function Post() {
     keyword = location.state.tag;
     console.log(keyword);
   }
-  const {
-    status,
-    data: feed,
-  } = useQuery(["feed", keyword], () => {
-    var query = "http://localhost:8080/feed";
-    if (keyword.length !== 0) {
-      query += '/category?search='+encodeURI(encodeURIComponent(keyword));
-    }
-    console.log(query);
-    fetch(query).then((res) =>
-      res.json()
-    );
-  }, {
-    onSuccess: data => {
+  const { status, data: feed } = useQuery(["feed",keyword], () => fetchPosts(keyword), {
+    onSuccess: (data) => {
       console.log(data);
     },
-    onError: e => {
+    onError: (e) => {
       console.log(e.message);
-    }
+    },
+    staleTime: 5000,
+    cacheTime: Infinity,
   });
   const queryClient = useQueryClient();
 
