@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 @RestController
@@ -36,9 +38,14 @@ public class PostController {
     }
 
     @GetMapping("feed/category")
-    public List<Post> category(@RequestParam(value = "search") String title) {
-        List<Post> postList = postService.getByCategory(title);
-        log.info(String.valueOf(postList.size()));
+    public List<Post> category(@RequestParam(value = "search") String keyword) {
+        List<Post> postList = null;
+        try {
+            log.info("search keyword : {} -> {}", keyword, URLDecoder.decode(keyword, "UTF-8"));
+            postList = postService.getByCategory(URLDecoder.decode(keyword, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         for (Post post : postList) {
             log.info(post.toString());
         }
