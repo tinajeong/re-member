@@ -1,11 +1,8 @@
 package migu.project.remember.data;
 
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.Date;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name="post")
@@ -18,10 +15,9 @@ public class Post {
     String contents;
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "post_id", updatable = false)
-    String postId;
+    Integer postId;
 
     @ManyToOne(targetEntity = Member.class,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name="membId")
@@ -54,7 +50,7 @@ public class Post {
         return contents;
     }
 
-    public String getPostId() {
+    public Integer getPostId() {
         return postId;
     }
 

@@ -16,7 +16,7 @@ public class PostService {
     }
 
     public List<Post> getAll()  {
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByCreatedAtDesc();
     }
 
     public List<Post> getByTitle(String title) {
@@ -29,6 +29,10 @@ public class PostService {
 
     public void save(Post post) {
         postRepository.save(post);
+    }
+
+    public List<String> getDistinctCategory() {
+        return postRepository.findDistinctCategory();
     }
 
 }

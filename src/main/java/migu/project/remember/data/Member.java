@@ -17,7 +17,7 @@ public class Member {
     String membId;
 
     @OneToMany(mappedBy = "member")
-    private List<Post> post = new ArrayList<Post>();
+    private List<Post> post = new ArrayList<>();
 
 
     @Override

@@ -6,7 +6,6 @@ import migu.project.remember.service.PostService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,16 +30,24 @@ public class PostController {
         return postList;
     }
 
-    @GetMapping("title")
+    @GetMapping("feed/title")
     public List<Post> title(@RequestParam(value = "search") String title) {
         return postService.getByTitle(title);
     }
 
-    @GetMapping("category")
+    @GetMapping("feed/category")
     public List<Post> category(@RequestParam(value = "search") String title) {
-        return postService.getByCategory(title);
+        List<Post> postList = postService.getByCategory(title);
+        log.info(String.valueOf(postList.size()));
+        for (Post post : postList) {
+            log.info(post.toString());
+        }
+        return postList;
     }
-
+    @GetMapping("category")
+    public List<String> distinctCategory() {
+        return postService.getDistinctCategory();
+    }
     @PostMapping("chunk")
     public String postChunk(@RequestBody @Valid PostForm postForm, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
