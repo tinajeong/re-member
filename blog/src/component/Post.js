@@ -6,22 +6,30 @@ import { useLocation } from "react-router-dom";
 
 export default function Post() {
   const location = useLocation();
-
+  var keyword ='';
+  if (location && location.state && typeof location.state.tag === "string" && location.state.tag !== 0) {
+    keyword = location.state.tag;
+    console.log(keyword);
+  }
   const {
-    isLoading,
-    error,
+    status,
     data: feed,
-  } = useQuery("feed", () => {
-    var keyword = '' 
+  } = useQuery(["feed", keyword], () => {
     var query = "http://localhost:8080/feed";
-    if (location && location.state && typeof location.state.tag === "string" && location.state.tag !== 0) {
-      keyword = location.state.tag;
-      console.log(keyword);
-      query += 'category?search='+keyword;
+    if (keyword.length !== 0) {
+      query += '/category?search='+encodeURI(encodeURIComponent(keyword));
     }
+    console.log(query);
     fetch(query).then((res) =>
       res.json()
     );
+  }, {
+    onSuccess: data => {
+      console.log(data);
+    },
+    onError: e => {
+      console.log(e.message);
+    }
   });
   const queryClient = useQueryClient();
 
@@ -43,9 +51,9 @@ export default function Post() {
   );
   const { handleSubmit, register, reset } = useForm();
 
-  if (isLoading) return <Loading />;
+  if (status === "loading") return <Loading />;
 
-  if (error) return <Error />;
+  if (status === "error") return <Error />;
 
   function onSubmit(newChunk) {
     mutation.mutate(newChunk);
