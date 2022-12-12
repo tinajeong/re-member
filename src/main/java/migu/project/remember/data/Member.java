@@ -3,8 +3,6 @@ package migu.project.remember.data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "member")
@@ -16,15 +14,10 @@ public class Member {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     String membId;
 
-    @OneToMany(mappedBy = "member")
-    private List<Post> post = new ArrayList<>();
-
-
     @Override
     public String toString() {
         return "Member{" +
                 "membId='" + membId + '\'' +
-                ", post=" + post +
                 '}';
     }
 }
