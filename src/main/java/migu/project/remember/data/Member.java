@@ -10,7 +10,7 @@ public class Member {
 
     @Id
     @GeneratedValue(generator = "uuid")
-    @Column(name = "memb_id", updatable = false)
+    @Column(name = "MEMB_ID", updatable = false)
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     String membId;
 

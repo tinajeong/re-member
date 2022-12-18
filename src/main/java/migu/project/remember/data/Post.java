@@ -15,7 +15,7 @@ public class Post {
     String contents;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id", updatable = false)
     Integer postId;
 
