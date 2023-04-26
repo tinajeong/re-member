@@ -7,6 +7,7 @@ import java.util.Date;
 @Entity
 @Table(name="bookmark")
 public class Bookmark {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "bookmark_id", updatable = false)

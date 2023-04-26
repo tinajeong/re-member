@@ -8,9 +8,11 @@ public class PostForm {
     @NotEmpty(message = "title is required")
     @Size(min=1, max=30)
     String title;
+
     @NotEmpty(message = "contents is required")
     @Size(min=1)
     String contents;
+    
     String category;
 
     public PostForm(String title, String contents, String category) {
