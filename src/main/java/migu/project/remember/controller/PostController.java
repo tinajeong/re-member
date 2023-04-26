@@ -14,6 +14,7 @@ import java.net.URLDecoder;
 import java.util.List;
 
 @RestController
+@RequestMapping("feed")
 public class PostController {
 
     private final Logger log = LoggerFactory.getLogger(PostController.class);
@@ -23,52 +24,46 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("feed")
+    @GetMapping
     public List<Post> all() {
         List<Post> postList = postService.getAll();
-        for (Post post : postList) {
-            log.info(post.toString());
-        }
+        postList.forEach(log::info);
         return postList;
     }
 
-    @GetMapping("feed/title")
-    public List<Post> title(@RequestParam(value = "search") String title) {
+    @GetMapping("title")
+    public List<Post> title(@RequestParam("search") String title) {
         return postService.getByTitle(title);
     }
 
-    @GetMapping("feed/category")
-    public List<Post> category(@RequestParam(value = "search") String keyword) {
-        List<Post> postList = null;
+    @GetMapping("category")
+    public List<Post> category(@RequestParam("search") String keyword) {
         try {
-            log.info("search keyword : {} -> {}", keyword, URLDecoder.decode(keyword, "UTF-8"));
-            postList = postService.getByCategory(URLDecoder.decode(keyword, "UTF-8"));
+            String decodedKeyword = URLDecoder.decode(keyword, "UTF-8");
+            log.info("search keyword : {} -> {}", keyword, decodedKeyword);
+            List<Post> postList = postService.getByCategory(decodedKeyword);
+            postList.forEach(log::info);
+            return postList;
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
-        for (Post post : postList) {
-            log.info(post.toString());
-        }
-        return postList;
     }
-    @GetMapping("category")
+
+    @GetMapping("category/distinct")
     public List<String> distinctCategory() {
         return postService.getDistinctCategory();
     }
+
     @PostMapping("chunk")
     public String postChunk(@RequestBody @Valid PostForm postForm, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-
-            log.info("invalid postForm :"+postForm.toString());
+        if (bindingResult.hasErrors()) {
+            log.info("invalid postForm :{}", postForm);
             return "redirect:/feed";
         }
 
-        String category = postForm.getCategory();
-        category = category == null ? "" : category;
-
+        String category = postForm.getCategory() == null ? "" : postForm.getCategory();
         Post post = new Post(postForm.getTitle(), postForm.getContents(), category);
         postService.save(post);
         return "redirect:/feed";
     }
-
 }
